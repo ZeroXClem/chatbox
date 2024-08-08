@@ -1,4 +1,4 @@
-name: Deploy Application
+name: Build and Deploy Application
 
 on:
   push:
@@ -24,6 +24,9 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: Run postinstall script
+      run: npm run postinstall
+
     - name: Run development server
       run: npm run dev
 
@@ -32,3 +35,9 @@ jobs:
 
     - name: Build application for all platforms
       run: npm run package:all
+
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: production-artifacts
+        path: release/build/l
